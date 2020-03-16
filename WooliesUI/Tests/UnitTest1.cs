@@ -1,26 +1,37 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Safari;
 using WooliesUI.PageClass;
 
 namespace WooliesUI
 {
-    public class UnitTest1
+    [TestFixture]
+    class UnitTest1
     {
-        [Test, Description ("Test that you can add two items to the cart and complete order")]
-        public void PlaceOrderWithTwoItems()
-        { 
+        IWebDriver driver = null;
+        HomePage homePage = null;
+
+        [OneTimeSetUp]
+        public void CreateBrowser()
+        {
             // Launch the browser 
             IWebDriver driver = new ChromeDriver();
             driver.Navigate().GoToUrl(Constants.HomePageConstants.URL);
-  
-            // Perform actions for the test
-            var homePage = new HomePage(driver);
+            homePage = new HomePage(driver);
+        }
+
+        [Test, Description ("Test that you can add two items to the cart and complete order")]
+        public void PlaceOrderWithTwoItems()
+        {
+            //Complete actions for test
             homePage.IncreaseQuantity();
             homePage.Checkout();
             homePage.SwitchToNewTab();
+
+            //Assert if two items are in the cart
             Assert.IsTrue(homePage.OrderHasTwoItems(), "Order does not contain two items");
+
+            //Continue completing steps
             homePage.ConfirmCheckout();
             homePage.ConfirmOrder();
             homePage.Login();
@@ -29,10 +40,16 @@ namespace WooliesUI
             homePage.ConfirmDelivery();
             homePage.ClickPaymentMethod();
             homePage.SubmitOrder();
+
             //Assert order is placed
             Assert.IsTrue(homePage.OrderWasPlaced(), "Order was not placed");
+        }
 
-            driver.Quit();
+        [OneTimeTearDown]
+        public void CloseBrowser()
+        {
+            //Close browser once complete
+            driver.Close();
         }
     }
 }

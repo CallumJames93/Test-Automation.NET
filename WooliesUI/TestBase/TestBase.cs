@@ -8,6 +8,7 @@ namespace WooliesUI.TestBase
     {
         public static IWebDriver driver;
 
+        
         public static void CreateBrowser()
         {
             
