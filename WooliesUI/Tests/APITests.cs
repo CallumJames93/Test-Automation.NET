@@ -3,6 +3,9 @@ using System.Net;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using RestSharp;
+using RestSharp.Deserializers;
+using RestSharp.Serialization.Json;
+
 
 namespace WooliesUI.Tests
 {
@@ -62,6 +65,23 @@ namespace WooliesUI.Tests
                 Assert.Pass("The weather in Sydney is hotter than 10 degrees");
             }
             
+        }
+
+        [Test, Description("Check that Sydney is the city in the response request")]
+        public void SydneyIsCity()
+        {
+            //Creating Client connection 
+            RestClient restClient = new RestClient("http://restapi.demoqa.com/utilities/weather/city/");
+            //Creating request to get data from server
+            RestRequest restRequest = new RestRequest("Sydney", Method.GET);
+
+            // Executing request to server and checking server response to the it
+            IRestResponse restResponse = restClient.Execute(restRequest);
+
+            var obj = JsonConvert.DeserializeObject<dynamic>(restResponse.Content);
+
+            Assert.That(obj.City.ToString(), Is.EqualTo("Sydney"));
+
         }
     }
 }
