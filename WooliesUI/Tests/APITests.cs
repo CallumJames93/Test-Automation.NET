@@ -9,10 +9,13 @@ using RestSharp.Serialization.Json;
 
 namespace WooliesUI.Tests
 {
+    [TestFixture]
     public class APITests
     {
-        [Test, Description("Check that the API status is OK")]
-        public void StatusOKTest()
+        IRestResponse restResponse = null;
+
+        [OneTimeSetUp]
+        public void SetUp()
         {
             //Creating Client connection
             RestClient restClient = new RestClient("http://restapi.demoqa.com/utilities/weather/city/");
@@ -20,23 +23,19 @@ namespace WooliesUI.Tests
             RestRequest restRequest = new RestRequest("Sydney", Method.GET);
 
             // Executing request to server and checking server response to the it
-            IRestResponse restResponse = restClient.Execute(restRequest);
+            restResponse = restClient.Execute(restRequest);
+        }
 
-            //Assert the API response is valid JSON
+
+        [Test, Description("Check that the API status is OK")]
+        public void StatusOKTest()
+        {
             Assert.That(restResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
 
         [Test, Description("Check that the API content is in valid  JSON")]
         public void ContentTypeTest()
         {
-            //Creating Client connection
-            RestClient restClient = new RestClient("http://restapi.demoqa.com/utilities/weather/city/");
-            //Creating request to get data from server
-            RestRequest restRequest = new RestRequest("Sydney", Method.GET);
-
-            // Executing request to server and checking server response to the it
-            IRestResponse restResponse = restClient.Execute(restRequest);
-
             //Assert the API response is valid JSON
             Assert.That(restResponse.ContentType, Is.EqualTo("application/json"));
         }
@@ -44,15 +43,6 @@ namespace WooliesUI.Tests
         [Test, Description("Check that the weather in Sydney is greater than 10 degrees")]
         public void SydneyWeatherTest()
         {
-            //Creating Client connection 
-            RestClient restClient = new RestClient("http://restapi.demoqa.com/utilities/weather/city/");
-
-            //Creating request to get data from server
-            RestRequest restRequest = new RestRequest("Sydney", Method.GET);
-
-            // Executing request to server and checking server response to the it
-            IRestResponse restResponse = restClient.Execute(restRequest);
-
             var obj = JsonConvert.DeserializeObject<dynamic>(restResponse.Content);
             //int temp = (int)obj.Temperature;
             string tempMsg = (string)obj.Temperature;
@@ -70,18 +60,9 @@ namespace WooliesUI.Tests
         [Test, Description("Check that Sydney is the city in the response request")]
         public void SydneyIsCity()
         {
-            //Creating Client connection 
-            RestClient restClient = new RestClient("http://restapi.demoqa.com/utilities/weather/city/");
-            //Creating request to get data from server
-            RestRequest restRequest = new RestRequest("Sydney", Method.GET);
-
-            // Executing request to server and checking server response to the it
-            IRestResponse restResponse = restClient.Execute(restRequest);
-
             var obj = JsonConvert.DeserializeObject<dynamic>(restResponse.Content);
 
             Assert.That(obj.City.ToString(), Is.EqualTo("Sydney"));
-
         }
     }
 }
