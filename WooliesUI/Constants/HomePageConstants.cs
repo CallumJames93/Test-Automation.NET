@@ -14,7 +14,7 @@ namespace WooliesUI.Constants
         public const string confirmCheckoutCssSelector = "#layer_cart > div.clearfix > div.layer_cart_cart.col-xs-12.col-md-6 > div.button-container > a > span > i";
         public const string quantityFldCssSelector = "#layer_cart > div.clearfix > div.layer_cart_cart.col-xs-12.col-md-6 > h2 > span.ajax_cart_product_txt_s.unvisible > span";
         public const string confirmOrderCssSelector = "#center_column > p.cart_navigation.clearfix > a.button.btn.btn-default.standard-checkout.button-medium > span > i";
-
+        public const string twitterCssSelector = "#center_column > div > div > div.pb-center-column.col-xs-12.col-sm-4 > p.socialsharing_product.list-inline.no-print > button.btn.btn-default.btn-twitter";
         public const string usernameFldID = "email";
         public const string pwdFldId = "passwd";
         public const string submitLoginBtnId = "SubmitLogin";

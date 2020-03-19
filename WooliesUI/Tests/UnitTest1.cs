@@ -45,11 +45,21 @@ namespace WooliesUI
             Assert.IsTrue(homePage.OrderWasPlaced(), "Order was not placed");
         }
 
+        [Test, Description("Test that you can launch Twitter")]
+        public void TwitterBtnLaunchesTwitter()
+        {
+            //launch to twitter and switch to new window
+            homePage.ClickTwitter();
+            homePage.SwitchToNewWindow();
+            //Assert that twitter loads in a new window
+            Assert.IsTrue(homePage.TwitterWasLaunched(), "Twitter was not launched");
+        }
+
         [OneTimeTearDown]
         public void CloseBrowser()
         {
             //Close browser once complete
-            driver.Close();
+            driver.Quit();
         }
     }
 }

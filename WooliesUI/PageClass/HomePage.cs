@@ -1,4 +1,6 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using System.Linq;
+using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
 
 namespace WooliesUI.PageClass
@@ -74,6 +76,10 @@ namespace WooliesUI.PageClass
         [FindsBy(How = How.CssSelector, Using = Constants.HomePageConstants.submitOrderBtnCssSelector)]
         [CacheLookup]
         public IWebElement submitOrderBtn { get; set; }
+
+        [FindsBy(How = How.CssSelector, Using = Constants.HomePageConstants.twitterCssSelector)]
+        [CacheLookup]
+        public IWebElement twitterBtn { get; set; }
 
         public HomePage(IWebDriver driver)
         {
@@ -161,6 +167,31 @@ namespace WooliesUI.PageClass
                 return true;
             }
 
+            return false;
+        }
+
+        public void ClickTwitter()
+        {
+            twitterBtn.Click();
+        }
+
+        public void SwitchToNewWindow()
+        {
+            driver.SwitchTo().Window(driver.WindowHandles.Last());
+            WaitTenSeconds();
+        }
+
+        public void WaitTenSeconds()
+        {
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+        }
+
+        public bool TwitterWasLaunched()
+        {
+            if (driver.Url.Contains("twitter.com"))
+            {
+                return true;
+            }
             return false;
         }
     }
