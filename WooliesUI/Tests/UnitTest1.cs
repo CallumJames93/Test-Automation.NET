@@ -55,6 +55,15 @@ namespace WooliesUI
             Assert.IsTrue(homePage.TwitterWasLaunched(), "Twitter was not launched");
         }
 
+        [Test, Description("Test that you can select Large Size")]
+        public void LargeItemCanBeSelected()
+        {
+            //launch to twitter and switch to new window
+            homePage.SelectLargeSize();
+            //Assert that twitter loads in a new window
+            Assert.IsTrue(homePage.LargeItemWasSelected(), "Large item was not selected");
+        }
+
         [OneTimeTearDown]
         public void CloseBrowser()
         {

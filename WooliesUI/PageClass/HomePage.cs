@@ -2,6 +2,7 @@
 using System.Linq;
 using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
+using OpenQA.Selenium.Support.UI;
 
 namespace WooliesUI.PageClass
 {
@@ -16,6 +17,10 @@ namespace WooliesUI.PageClass
         [FindsBy(How = How.Id, Using = Constants.HomePageConstants.searchBarId)]
         [CacheLookup]
         public IWebElement searchBar { get; set; }
+
+        [FindsBy(How = How.Id, Using = Constants.HomePageConstants.sizeDropdownId)]
+        [CacheLookup]
+        public IWebElement sizeDropdown { get; set; }
 
         [FindsBy(How = How.XPath, Using = Constants.HomePageConstants.submitSearchClass)]
         [CacheLookup]
@@ -192,6 +197,26 @@ namespace WooliesUI.PageClass
             {
                 return true;
             }
+            return false;
+        }
+
+        public void SelectLargeSize()
+        {
+            SelectElement oSelect = new SelectElement(driver.FindElement(By.Id(Constants.HomePageConstants.sizeDropdownId)));
+            oSelect.SelectByText("L");
+            WaitTenSeconds();
+        }
+
+        public bool LargeItemWasSelected()
+        {
+            SelectElement oSelect = new SelectElement(driver.FindElement(By.Id(Constants.HomePageConstants.sizeDropdownId)));
+            string actualItemSize = oSelect.SelectedOption.Text;
+
+            if (actualItemSize == "L")
+            {
+                return true;
+            }
+
             return false;
         }
     }

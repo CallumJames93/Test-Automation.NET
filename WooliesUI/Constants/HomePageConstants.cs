@@ -9,6 +9,8 @@ namespace WooliesUI.Constants
         public const string womenTabXPath = "//*[@id='block_top_menu]/ul/li[1]/a";
 
         public const string URL = "http://automationpractice.com/index.php?id_product=3&controller=product";
+        public const string sizeDropdownId = "group_1";
+
         public const string quantityCssSelector = "#quantity_wanted_p > a.btn.btn-default.button-plus.product_quantity_up > span > i";
         public const string checkoutCssSelector = "#add_to_cart > button > span";
         public const string confirmCheckoutCssSelector = "#layer_cart > div.clearfix > div.layer_cart_cart.col-xs-12.col-md-6 > div.button-container > a > span > i";
